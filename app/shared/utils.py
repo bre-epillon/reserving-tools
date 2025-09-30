@@ -1,8 +1,16 @@
 import pandas as pd
+from shared.colored_logging import info, warning, error, debug, success
 
 
-def create_pivot_table(df, index, columns, values, aggfunc="sum", fill_value=0):
+def create_pivot_table(
+    df: pd.DataFrame, index, columns, values, aggfunc="sum", fill_value=0
+):
     """Creates a pivot table from the given DataFrame."""
+    debug(f"DataFrame shape before pivot: {df.shape}")
+    debug(
+        f"Creating pivot table with index={index}, columns={columns}, values={values}"
+    )
+
     pivot_df = df.pivot_table(
         index=index,
         columns=columns,

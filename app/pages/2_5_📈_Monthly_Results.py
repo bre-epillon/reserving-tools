@@ -74,9 +74,7 @@ st.selectbox(
     key="selected_month",
     index=int(get_month(st.session_state.current_date)) - 1,
 )
-st.write(
-    f"Type of selected month: {type(st.session_state.selected_month)}  Value: {st.session_state.selected_month}"
-)
+
 monthly_data = get_monthly_data(month=st.session_state.selected_month)
 
 st.write(

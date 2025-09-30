@@ -1,7 +1,7 @@
 import streamlit as st
 from presentation.state.session_state_manager import initialize_session_state
 from shared.narratives import USAGE, DETAILS, NAVIGATION, DISCLAIMER
-from shared.constants import SUBLOBS, YEARS
+from shared.constants import SUBLOBS, YEARS, formats
 from shared.utils import (
     create_pivot_table,
     get_quarter,
@@ -49,8 +49,8 @@ claims_pivot = create_pivot_table(
     values="value",
 )
 
-st.dataframe(policies_pivot)
-st.dataframe(claims_pivot)
+# st.dataframe(policies_pivot)
+# st.dataframe(claims_pivot)
 
 
 st.write("LoB Level Summary")
@@ -66,18 +66,33 @@ def get_quarterly_data(quarter):
     )
 
 
-st.selectbox(
-    "Select quarterly data",
-    options=[i for i in range(1, 5)],
-    key="selected_quarter",
-    index=int(get_quarter(st.session_state.current_date)),
-)
+col1, col2 = st.columns(2)
+
+with col1:
+    st.selectbox(
+        "Select quarterly data",
+        options=[i for i in range(1, 5)],
+        key="selected_quarter",
+        index=int(get_quarter(st.session_state.current_date)) - 1,
+    )
+
+with col2:
+    style_options = [key for key in formats.keys()]
+    st.selectbox(
+        "Select data styling display",
+        options=style_options,
+        key="selected_style_quarter",
+        index=style_options.index("thousands") if "thousands" in style_options else 0,
+    )
 
 quarterly_data = get_quarterly_data(st.session_state.selected_quarter)
-
-st.write(
+quarterly_data = quarterly_data[
+    quarterly_data["Measure"].isin(["GClmO", "GClmP", "GGWP", "GPrmB"])
+]
+info(
     f"Showing data from {get_custom_cutoff_quarter(date=st.session_state.current_date, actual_quarter=st.session_state.selected_quarter)} onwards"
 )
+debug(f"Quarterly data shape after filtering: {quarterly_data.shape}")
 
 # quarterly_data = quarterly_data[
 #     quarterly_data["CutOffDate"] > get_last_quarter_cutoff(st.session_state.current_date)
@@ -86,14 +101,22 @@ st.write(
 quarterly_pivot = create_pivot_table(
     quarterly_data,
     index=["UWY"],
-    columns="Final LOB",
+    columns=["Final LOB", "Measure"],
     values="value",
     fill_value=0,
     aggfunc="sum",
 )
 
-st.dataframe(quarterly_data.head())
-st.dataframe(quarterly_pivot)
+# Format only numeric columns
+st.dataframe(
+    quarterly_pivot.style.format(
+        {
+            col: formats[st.session_state.get("selected_style_quarter", "thousands")]
+            for col in quarterly_pivot.columns
+            if np.issubdtype(quarterly_pivot[col].dtype, np.number)
+        }
+    )
+)
 
 with st.expander("See Summary by policy level"):
     lob_policy_pivot = create_pivot_table(
