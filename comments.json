@@ -8,7 +8,7 @@
     {
       "LOB": "DCBON",
       "UWY": 2019,
-      "Comment": ""
+      "Comment": "CBON21XES0011, settlement and closure"
     },
     {
       "LOB": "DCBON",
@@ -28,7 +28,7 @@
     {
       "LOB": "DCBON",
       "UWY": 2023,
-      "Comment": ""
+      "Comment": "`Anastia Gourmet Hosteleria SL Y Mandalore SL` 800k to be reserved, settlement possible at 550k, but litigation could increase the fees/costs/interests"
     },
     {
       "LOB": "DCENR",
@@ -78,7 +78,7 @@
     {
       "LOB": "DCFIL",
       "UWY": 2023,
-      "Comment": ""
+      "Comment": "Bank of Lebabon => 1m incurred, absorbed by the IBNR; `CFIL23XAM0091` (173k) and `CFIL24XPI0003` (113k)"
     },
     {
       "LOB": "DCFIL",
@@ -93,7 +93,7 @@
     {
       "LOB": "DCLIA",
       "UWY": 2017,
-      "Comment": ""
+      "Comment": "claim adjustment of 130k"
     },
     {
       "LOB": "DCLIA",
@@ -198,7 +198,7 @@
     {
       "LOB": "ENOFF",
       "UWY": 2016,
-      "Comment": ""
+      "Comment": "Payment of the 2m for Reliance Industries CENR17XIN0020"
     },
     {
       "LOB": "ENOFF",
@@ -218,7 +218,7 @@
     {
       "LOB": "ENOFF",
       "UWY": 2020,
-      "Comment": ""
+      "Comment": "deletion of the override of the IBNR allocation (last expiration was October 2023)"
     },
     {
       "LOB": "ENOFF",
@@ -238,7 +238,7 @@
     {
       "LOB": "ENOFF",
       "UWY": 2024,
-      "Comment": "Increased due to new claims in Q3"
+      "Comment": "Persero Pertamina reduction to 800k max exposure. We consider we have enough IBNR."
     },
     {
       "LOB": "ENOFF",
@@ -263,12 +263,12 @@
     {
       "LOB": "ENONS",
       "UWY": 2020,
-      "Comment": "Increased due to new claims in Q3"
+      "Comment": "Braskem improvement of 580k for the email of Haseem (CENR21XBR0081 from 1.2m to 800k) + deletion of the override of the IBNR allocation"
     },
     {
       "LOB": "ENONS",
       "UWY": 2021,
-      "Comment": ""
+      "Comment": "1.95m SIBNR for Marinsa de Mexico (for which we\u00e2\u20ac\u2122re reserving at maximum exposure)"
     },
     {
       "LOB": "ENONS",
@@ -283,7 +283,7 @@
     {
       "LOB": "ENONS",
       "UWY": 2024,
-      "Comment": ""
+      "Comment": "990k deterioration due to ROE of Varo + 1.2m deterioration of Bayernoil due to ROE (and 1.7m paid) + 1.6m of case reserve for Orlan Spolka Akcyjna: fire in the HV switchyard at the Anwil S.A., W\u00c5\u201aoc\u00c5\u201aawek site + 960k of case reserve for Polski Koncern Naftowy Orlen SA: Damage at the Litvinov Refinery following a power outage across a large area of the Czech Republic; CENR25XCZ0052 (1.5m) and CENR25XPL0024 (900k); for both of them we have a fac retro "
     },
     {
       "LOB": "ENONS",
@@ -328,7 +328,7 @@
     {
       "LOB": "LIIND",
       "UWY": 2023,
-      "Comment": ""
+      "Comment": "Pattern developed follow experience; reduction of 100k in IBNR only moving from 75% BF to 75% CL"
     },
     {
       "LOB": "LIIND",
@@ -348,7 +348,7 @@
     {
       "LOB": "LIMLT",
       "UWY": 2018,
-      "Comment": ""
+      "Comment": "Korean contract"
     },
     {
       "LOB": "LISHT",
@@ -428,12 +428,12 @@
     {
       "LOB": "PRTOT",
       "UWY": 2023,
-      "Comment": ""
+      "Comment": "Duck struck by a ship case reserve set; topped up LR by 7% to slow down the release of IBNR"
     },
     {
       "LOB": "PRTOT",
       "UWY": 2024,
-      "Comment": "This is a test"
+      "Comment": ""
     }
   ]
 }

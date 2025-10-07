@@ -28,7 +28,6 @@ st.write(
     "This page provides an overview of the quarterly movements for each line of business (LoB), both at the claim level and policy level."
 )
 
-st.write(st.session_state.transactions_data.head())
 df = st.session_state.transactions_data.copy()
 
 df.drop(columns=["LOB"], inplace=True)
@@ -146,8 +145,6 @@ def load_comments():
 comments_data = load_comments()
 
 df_comments = pd.DataFrame.from_dict(comments_data["2025Q3"])
-
-st.write(df_comments)
 # =============================================================
 # Merge comments with result_formatted using UWY and LOB
 merged_result = pd.merge(
@@ -217,9 +214,3 @@ if st.button("Save Comments"):
         success("Comments saved successfully.")
     except Exception as e:
         error(f"Failed to save comments: {e}")
-
-# st.write(
-#     comments_data[last_quarter.strftime("%Y%Q")]
-#     if last_quarter.strftime("%Y%Q") in comments_data
-#     else "No comments available for this quarter."
-# )
