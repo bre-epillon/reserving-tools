@@ -94,10 +94,6 @@ info(
 )
 debug(f"Quarterly data shape after filtering: {quarterly_data.shape}")
 
-# quarterly_data = quarterly_data[
-#     quarterly_data["CutOffDate"] > get_last_quarter_cutoff(st.session_state.current_date)
-# ]
-
 quarterly_pivot = create_pivot_table(
     quarterly_data,
     index=["UWY"],
