@@ -95,7 +95,7 @@ monthly_pivot = create_pivot_table(
 )
 
 st.dataframe(monthly_data.head())
-st.dataframe(monthly_pivot)
+# st.dataframe(monthly_pivot)
 
 with st.expander("See Summary by policy level"):
     lob_policy_pivot = create_pivot_table(
@@ -105,3 +105,62 @@ with st.expander("See Summary by policy level"):
         values="value",
     )
     st.dataframe(lob_policy_pivot)
+
+policies_movement = st.session_state.transactions_data.copy()
+policies_movement = policies_movement[
+    policies_movement["Measure"].isin(["GClmO", "GClmP"])
+]
+
+
+uwy_selector = st.multiselect(
+    "Select UWY (if not selected, all will be selected)",
+    options=policies_movement["UWY"].unique(),
+    key="selected_uwy",
+    default=policies_movement["UWY"].unique(),
+)
+lob_selector = st.multiselect(
+    "Select LOB (if not selected, all will be selected)",
+    options=policies_movement["Final LOB"].unique(),
+    key="selected_lob",
+    default=policies_movement["Final LOB"].unique(),
+)
+
+selected_uwy = st.session_state.selected_uwy
+selected_lob = st.session_state.selected_lob
+
+if not selected_uwy:
+    selected_uwy = policies_movement["UWY"].unique()
+if not selected_lob:
+    selected_lob = policies_movement["Final LOB"].unique()
+
+filtered_data = policies_movement[
+    (policies_movement["UWY"].isin(selected_uwy))
+    & (policies_movement["Final LOB"].isin(selected_lob))
+]
+
+filtered_pivot = create_pivot_table(
+    policies_movement,
+    index=[
+        "Final LOB",
+        "UWY",
+    ],
+    columns="Measure",
+    values="value",
+    fill_value=0,
+    aggfunc="sum",
+)
+# filtered_pivot = filtered_pivot.unstack(level=-1).reset_index()
+
+st.dataframe(filtered_pivot)
+
+filtered_pivot["Month"] = filtered_pivot["CutOffDate"].dt.to_period("M")
+
+st.dataframe(filtered_pivot)
+
+# filtered_pivot = filtered_pivot.groupby(["UWY", "Final LOB", "Month"])[
+#     ["value"]
+# ].cumsum()
+# filtered_pivot = filtered_pivot.unstack("Month").reset_index()
+# filtered_pivot["Change"] = filtered_pivot["value"].diff().fillna(0)
+# filtered_pivot = filtered_pivot.sort_values(by=["UWY", "Final LOB", "Month"])
+# st.dataframe(filtered_pivot)
