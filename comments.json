@@ -1,0 +1,24 @@
+{
+    "2025Q3": [
+        {
+            "LOB": "ENOFF",
+            "UWY": 2025,
+            "Comment": "Increased due to new claims in Q3"
+        },
+        {
+            "LOB": "ENOFF",
+            "UWY": 2024,
+            "Comment": "Increased due to new claims in Q3"
+        },
+        {
+            "LOB": "ENONS",
+            "UWY": 2020,
+            "Comment": "Increased due to new claims in Q3"
+        },
+        {
+            "LOB": "ENONS",
+            "UWY": 2022,
+            "Comment": "Increased due to new claims in Q3"
+        }
+    ]
+}
