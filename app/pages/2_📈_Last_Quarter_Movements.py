@@ -32,18 +32,18 @@ st.write(
 
 df = st.session_state.transactions_data.copy()
 
+debug(f"Transactions data shape: {st.session_state.transactions_data.shape}")
+
 df.drop(columns=["LOB"], inplace=True)
 df.rename(columns={"Final LOB": "LOB"}, inplace=True)
 
 df["date"] = pd.to_datetime(df["CutOffDate"])
-df = df[df["Measure"].isin(["GClmO", "GClmP"])]
 debug(f"Latest entry found in the data: {df['date'].max()}")
 
 last_quarter = df["date"].max().to_period("Q")
 mask_last_quarter = df["date"].dt.to_period("Q") == last_quarter
 
 st.write(f"Data is available up to: **{last_quarter}**")
-
 
 SELECTED_QUARTER = last_quarter
 
@@ -54,6 +54,7 @@ COMMENTS_FILE = f"comments_{LAST_QUARTER_STR}.json"
 debug(f"Comments file set to: {COMMENTS_FILE}")
 
 
+df = df[df["Measure"].isin(["GClmO", "GClmP"])]
 with st.expander("Supporting Selection Filters"):
     col1, col2 = st.columns(2)
     with col1:
@@ -78,6 +79,9 @@ df = df[df["LOB"].isin(lob_selector) & df["UWY"].isin(uwy_selector)]
 df_total = df.copy()
 
 df_last_quarter = df.loc[mask_last_quarter].copy()
+info(
+    f"Data filtered for last quarter ({LAST_QUARTER_STR}) has shape: {df_last_quarter.shape}"
+)
 
 
 # Pivot table for totals
