@@ -1,5 +1,5 @@
 {
-  "2025Q3": [
+  "2025Q": [
     {
       "LOB": "DCBON",
       "UWY": 2018,
@@ -8,12 +8,12 @@
     {
       "LOB": "DCBON",
       "UWY": 2019,
-      "Comment": "CBON21XES0011, settlement and closure"
+      "Comment": ""
     },
     {
       "LOB": "DCBON",
       "UWY": 2020,
-      "Comment": ""
+      "Comment": "Test Test"
     },
     {
       "LOB": "DCBON",
@@ -28,7 +28,7 @@
     {
       "LOB": "DCBON",
       "UWY": 2023,
-      "Comment": "''Anastia Gourmet'' 800k to be reserved (possible settlement at 550k) + fees; IBNR from 8.8m to 7.8m"
+      "Comment": ""
     },
     {
       "LOB": "DCENR",
@@ -58,7 +58,7 @@
     {
       "LOB": "DCFIL",
       "UWY": 2019,
-      "Comment": "SIBNR for USD 2.1m, reserving at maximum exposure for Commercial International Bank"
+      "Comment": ""
     },
     {
       "LOB": "DCFIL",
@@ -78,12 +78,12 @@
     {
       "LOB": "DCFIL",
       "UWY": 2023,
-      "Comment": "Bank of Lebabon => 1m incurred, absorbed by the IBNR; `CFIL23XAM0091` (173k) and `CFIL24XPI0003` (113k); SIBNR for 750k,  reserving at maximum exposure"
+      "Comment": ""
     },
     {
       "LOB": "DCFIL",
       "UWY": 2024,
-      "Comment": "SIBNR for 770k, reserving at maximum exposure"
+      "Comment": ""
     },
     {
       "LOB": "DCLIA",
@@ -93,7 +93,7 @@
     {
       "LOB": "DCLIA",
       "UWY": 2017,
-      "Comment": "claim adjustment of 130k"
+      "Comment": ""
     },
     {
       "LOB": "DCLIA",
@@ -108,17 +108,17 @@
     {
       "LOB": "DCMAR",
       "UWY": 2018,
-      "Comment": "UWY set off risk => release of IBNR"
+      "Comment": ""
     },
     {
       "LOB": "DCMAR",
       "UWY": 2019,
-      "Comment": "UWY set off risk => release of IBNR"
+      "Comment": ""
     },
     {
       "LOB": "DCMAR",
       "UWY": 2020,
-      "Comment": "UWY set off risk => release of IBNR"
+      "Comment": ""
     },
     {
       "LOB": "DCMAR",
@@ -133,7 +133,7 @@
     {
       "LOB": "DCMAR",
       "UWY": 2023,
-      "Comment": ""
+      "Comment": "Test Test"
     },
     {
       "LOB": "DCMAR",
@@ -198,7 +198,7 @@
     {
       "LOB": "ENOFF",
       "UWY": 2016,
-      "Comment": "Payment of the 2m for Reliance Industries CENR17XIN0020"
+      "Comment": ""
     },
     {
       "LOB": "ENOFF",
@@ -218,7 +218,7 @@
     {
       "LOB": "ENOFF",
       "UWY": 2020,
-      "Comment": "deletion of the override of the IBNR allocation (last expiration was October 2023)"
+      "Comment": ""
     },
     {
       "LOB": "ENOFF",
@@ -238,12 +238,12 @@
     {
       "LOB": "ENOFF",
       "UWY": 2024,
-      "Comment": "Persero Pertamina reduction to 800k max exposure. We consider we have enough IBNR."
+      "Comment": ""
     },
     {
       "LOB": "ENOFF",
       "UWY": 2025,
-      "Comment": "Increased due to new claims in Q3"
+      "Comment": ""
     },
     {
       "LOB": "ENONS",
@@ -253,7 +253,7 @@
     {
       "LOB": "ENONS",
       "UWY": 2018,
-      "Comment": ""
+      "Comment": "Test Test"
     },
     {
       "LOB": "ENONS",
@@ -263,17 +263,17 @@
     {
       "LOB": "ENONS",
       "UWY": 2020,
-      "Comment": "Braskem improvement of 580k for the email of Haseem (CENR21XBR0081 from 1.2m to 800k) + deletion of the override of the IBNR allocation"
+      "Comment": ""
     },
     {
       "LOB": "ENONS",
       "UWY": 2021,
-      "Comment": "1.95m SIBNR for Marinsa de Mexico (for which we\u00e2\u20ac\u2122re reserving at maximum exposure)"
+      "Comment": ""
     },
     {
       "LOB": "ENONS",
       "UWY": 2022,
-      "Comment": "Increased due to new claims in Q3"
+      "Comment": ""
     },
     {
       "LOB": "ENONS",
@@ -283,7 +283,7 @@
     {
       "LOB": "ENONS",
       "UWY": 2024,
-      "Comment": "990k deterioration due to ROE of Varo + 1.2m deterioration of Bayernoil due to ROE (and 1.7m paid) + 1.6m of case reserve for Orlan Spolka Akcyjna: fire in the HV switchyard at the Anwil S.A., W\u00c5\u201aoc\u00c5\u201aawek site + 960k of case reserve for Polski Koncern Naftowy Orlen SA: Damage at the Litvinov Refinery following a power outage across a large area of the Czech Republic; CENR25XCZ0052 (1.5m) and CENR25XPL0024 (900k); for both of them we have a fac retro "
+      "Comment": ""
     },
     {
       "LOB": "ENONS",
@@ -328,7 +328,7 @@
     {
       "LOB": "LIIND",
       "UWY": 2023,
-      "Comment": "Pattern developed follow experience; reduction of 100k in IBNR only moving from 75% BF to 75% CL"
+      "Comment": ""
     },
     {
       "LOB": "LIIND",
@@ -343,12 +343,12 @@
     {
       "LOB": "LIMED",
       "UWY": 2025,
-      "Comment": ""
+      "Comment": "Test Test"
     },
     {
       "LOB": "LIMLT",
       "UWY": 2018,
-      "Comment": "Korean contract"
+      "Comment": ""
     },
     {
       "LOB": "LISHT",
@@ -408,7 +408,7 @@
     {
       "LOB": "PRTOT",
       "UWY": 2019,
-      "Comment": ""
+      "Comment": "Test Test"
     },
     {
       "LOB": "PRTOT",
@@ -428,12 +428,12 @@
     {
       "LOB": "PRTOT",
       "UWY": 2023,
-      "Comment": "Duck struck by a ship case reserve set; topped up LR by 7% to slow down the release of IBNR"
+      "Comment": ""
     },
     {
       "LOB": "PRTOT",
       "UWY": 2024,
-      "Comment": "Improvement of 1m from TW EQ"
+      "Comment": ""
     }
   ]
 }

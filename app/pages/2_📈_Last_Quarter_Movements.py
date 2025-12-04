@@ -28,6 +28,8 @@ st.write(
     "This page provides an overview of the quarterly movements for each line of business (LoB), both at the claim level and policy level."
 )
 
+# SELECTED_QUARTER = st.session_state.get("selected_quarter", None)
+
 df = st.session_state.transactions_data.copy()
 
 df.drop(columns=["LOB"], inplace=True)
@@ -35,11 +37,21 @@ df.rename(columns={"Final LOB": "LOB"}, inplace=True)
 
 df["date"] = pd.to_datetime(df["CutOffDate"])
 df = df[df["Measure"].isin(["GClmO", "GClmP"])]
+debug(f"Latest entry found in the data: {df['date'].max()}")
 
 last_quarter = df["date"].max().to_period("Q")
 mask_last_quarter = df["date"].dt.to_period("Q") == last_quarter
 
 st.write(f"Data is available up to: **{last_quarter}**")
+
+
+SELECTED_QUARTER = last_quarter
+
+LAST_QUARTER_STR = f"{last_quarter.year}Q{last_quarter.quarter}"
+debug(f"Last quarter identified as: {LAST_QUARTER_STR}")
+
+COMMENTS_FILE = f"comments_{LAST_QUARTER_STR}.json"
+debug(f"Comments file set to: {COMMENTS_FILE}")
 
 
 with st.expander("Supporting Selection Filters"):
@@ -128,7 +140,6 @@ for col in number_cols:
 # =============================================================
 # Loading comments and annotations
 def load_comments():
-    COMMENTS_FILE = "comments.json"
     try:
         with open(COMMENTS_FILE, "r") as f:
             return json.load(f)
@@ -144,7 +155,12 @@ def load_comments():
 
 comments_data = load_comments()
 
-df_comments = pd.DataFrame.from_dict(comments_data["2025Q3"])
+
+df_comments = (
+    pd.DataFrame.from_dict(comments_data[LAST_QUARTER_STR])
+    if LAST_QUARTER_STR in comments_data
+    else pd.DataFrame(columns=["LOB", "UWY", "Comment"])
+)
 # =============================================================
 # Merge comments with result_formatted using UWY and LOB
 merged_result = pd.merge(
@@ -208,8 +224,8 @@ for idx, row in result[["LOB", "UWY"]].iterrows():
 if st.button("Save Comments"):
     try:
         info("Saving comments...")
-        with open("comments.json", "w") as f:
-            debug("Saving comments into `comments.json`")
+        with open(COMMENTS_FILE, "w") as f:
+            debug(f"Saving comments into `{COMMENTS_FILE}`: {updated_comments}")
             json.dump(updated_comments, f, indent=2)
         success("Comments saved successfully.")
     except Exception as e:
