@@ -7,8 +7,13 @@ from shared.colored_logging import info, warning, error, debug, success
 files = {}
 
 for file in os.listdir("inputs"):
-    if file.endswith(".xlsx") and file.startswith("data_202511"):
+    if file.endswith(".xlsx") and file.startswith("data_202"):
         files[file] = os.path.join("inputs", file)
+
+exposures = {}
+for file in os.listdir("inputs"):
+    if file.endswith(".xlsx") and file.startswith("UW_Report_"):
+        exposures[file] = os.path.join("inputs", file)
 
 
 def initialize_session_state(debug: bool = False):
@@ -28,7 +33,7 @@ def initialize_session_state(debug: bool = False):
 
     # import data if not already in session state and cache them in session state
     if st.session_state.transactions_data is None:
-        st.session_state.transactions_file = files.get("data_202511.xlsx", None)
+        st.session_state.transactions_file = files.get("data_202509.xlsx", None)
 
         st.session_state.transactions_data = (
             pd.read_excel(
