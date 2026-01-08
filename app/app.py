@@ -12,17 +12,17 @@ args = parser.parse_args()
 def main():
     initialize_session_state(debug=args.debug)
 
-    st.sidebar.title("Navigation")
-    st.sidebar.markdown(NAVIGATION)
+    st.title("Navigation")
+    st.markdown(NAVIGATION)
 
-    st.sidebar.title("Usage Instructions")
-    st.sidebar.markdown(USAGE)
+    st.title("Usage Instructions")
+    st.markdown(USAGE)
 
-    st.sidebar.title("Details")
-    st.sidebar.markdown(DETAILS)
+    st.title("Details")
+    st.markdown(DETAILS)
 
-    st.sidebar.title("Disclaimer")
-    st.sidebar.markdown(DISCLAIMER)
+    st.title("Disclaimer")
+    st.markdown(DISCLAIMER)
 
 
 if __name__ == "__main__":
