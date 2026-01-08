@@ -1,12 +1,12 @@
 import streamlit as st
 from presentation.state.session_state_manager import initialize_session_state
-from shared.narratives import USAGE, DETAILS, NAVIGATION, DISCLAIMER
 from shared.constants import SUBLOBS, YEARS, formats
 from shared.utils import (
     create_pivot_table,
     get_quarter,
     get_last_quarter_cutoff,
     get_custom_cutoff_quarter,
+    get_sidebar,
 )
 from shared.colored_logging import info, warning, error, debug, success
 import pandas as pd
@@ -17,18 +17,7 @@ st.set_page_config(page_title="Quarterly Results", page_icon="📈", layout="wid
 initialize_session_state()
 
 st.title("Quarterly Results")
-st.sidebar.title("Navigation")
-st.sidebar.markdown(NAVIGATION)
-
-st.sidebar.title("Usage Instructions")
-st.sidebar.markdown(USAGE)
-
-st.sidebar.title("Details")
-st.sidebar.markdown(DETAILS)
-
-st.sidebar.title("Disclaimer")
-st.sidebar.markdown(DISCLAIMER)
-
+get_sidebar()
 
 st.write(
     "This page provides an overview of the quarterly movements for each line of business (LoB), both at the claim level and policy level."

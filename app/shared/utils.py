@@ -1,5 +1,22 @@
+import streamlit as st
 import pandas as pd
+from shared.narratives import DETAILS, DISCLAIMER, NAVIGATION, USAGE
 from shared.colored_logging import info, warning, error, debug, success
+
+
+def get_sidebar():
+    """Generates the sidebar content."""
+    st.sidebar.title("Navigation")
+    st.sidebar.markdown(NAVIGATION)
+
+    st.sidebar.title("Usage Instructions")
+    st.sidebar.markdown(USAGE)
+
+    st.sidebar.title("Details")
+    st.sidebar.markdown(DETAILS)
+
+    st.sidebar.title("Disclaimer")
+    st.sidebar.markdown(DISCLAIMER)
 
 
 def create_pivot_table(
@@ -73,3 +90,15 @@ def get_custom_cutoff_quarter(date: str, actual_quarter: int):
     assert actual_quarter in [1, 2, 3, 4], "Quarter must be between 1 and 4"
     actual_month = (actual_quarter - 1) * 3 + 1
     return get_custom_cutoff_month(date, actual_month)
+
+
+if __name__ == "__main__":
+    # Example usage
+    sample_date = "2024-06-15"
+    print(f"Month: {get_month(sample_date)}")
+    print(f"Year: {get_year(sample_date)}")
+    print(f"Quarter: {get_quarter(sample_date)}")
+    print(f"Last Quarter Cutoff: {get_last_quarter_cutoff(sample_date)}")
+    print(f"Last Month Cutoff: {get_last_month_cutoff(sample_date)}")
+    print(f"Custom Cutoff Month (5): {get_custom_cutoff_month(sample_date, 5)}")
+    print(f"Custom Cutoff Quarter (2): {get_custom_cutoff_quarter(sample_date, 2)}")

@@ -1,9 +1,13 @@
 USAGE = """
 ## How to use this dashboard
 
-1. Upload the ABE&MBE file and IBNR file of most recent quarter.
-2. Run the Montecarlo simulation with the desired number of simulations.
-3. Explore the data and analysis provided for each LoB.
+Latest ABE&MBE file is automatically imported for the most recent quarter.
+
+1. Last Month Movements provides a summary of the movements in the last month.
+2. Last Quarter Movements provides a summary of the movements in the last quarter.
+3. Claim Analyzer allows to analyze the claims at a granular level and offers a graphical representation of the claim evolution over time.
+4. Policy Analyzer allows to analyze the data at policy level and offers.
+5. One Dollar Claims Analyzer Tool provides a shortcut to analyze claims-level data based on the transactions data imported in the main page.
 """
 
 DETAILS = """
