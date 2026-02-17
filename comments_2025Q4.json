@@ -435,5 +435,452 @@
       "UWY": 2024,
       "Comment": ""
     }
+  ],
+  "2025Q4": [
+    {
+      "LOB": "DCBON",
+      "UWY": 2017,
+      "Comment": ""
+    },
+    {
+      "LOB": "DCBON",
+      "UWY": 2018,
+      "Comment": "- `CBON20XIT0002/3` improvement of 800k: exclusion has been declare ilegitimate by the court ruling"
+    },
+    {
+      "LOB": "DCBON",
+      "UWY": 2019,
+      "Comment": "3 different claims for the same Italian Bond BON19009670A for a total of 184k deterioration in case reserve."
+    },
+    {
+      "LOB": "DCBON",
+      "UWY": 2020,
+      "Comment": ""
+    },
+    {
+      "LOB": "DCBON",
+      "UWY": 2021,
+      "Comment": ""
+    },
+    {
+      "LOB": "DCBON",
+      "UWY": 2022,
+      "Comment": "Deterioration of 160k for the Spanish bond BON22018730A"
+    },
+    {
+      "LOB": "DCBON",
+      "UWY": 2023,
+      "Comment": "- `CBON24XIT0014` reduction of 300k for Marina di Porto San Giorgio:  Policy Holder has been making instalment payments to the Beneficiary. reducing the claim reserve by 50%, from EUR 635,436 to EUR 317,718. Claim went from Large to Attritional, hence effect on the pattern and increase in IBNR (BF 100% still used as deemed more reliable albeit less conservative)."
+    },
+    {
+      "LOB": "DCENR",
+      "UWY": 2017,
+      "Comment": ""
+    },
+    {
+      "LOB": "DCENR",
+      "UWY": 2018,
+      "Comment": ""
+    },
+    {
+      "LOB": "DCFIL",
+      "UWY": 2016,
+      "Comment": ""
+    },
+    {
+      "LOB": "DCFIL",
+      "UWY": 2017,
+      "Comment": "We decided to get rid of the 0.7m remaining IBNR (decision taken at Q3 ending from Gaynore comment); UWY is considered offrisk"
+    },
+    {
+      "LOB": "DCFIL",
+      "UWY": 2018,
+      "Comment": ""
+    },
+    {
+      "LOB": "DCFIL",
+      "UWY": 2019,
+      "Comment": ""
+    },
+    {
+      "LOB": "DCFIL",
+      "UWY": 2020,
+      "Comment": ""
+    },
+    {
+      "LOB": "DCFIL",
+      "UWY": 2021,
+      "Comment": ""
+    },
+    {
+      "LOB": "DCFIL",
+      "UWY": 2022,
+      "Comment": ""
+    },
+    {
+      "LOB": "DCFIL",
+      "UWY": 2023,
+      "Comment": ""
+    },
+    {
+      "LOB": "DCFIL",
+      "UWY": 2024,
+      "Comment": ""
+    },
+    {
+      "LOB": "DCLIA",
+      "UWY": 2016,
+      "Comment": ""
+    },
+    {
+      "LOB": "DCLIA",
+      "UWY": 2017,
+      "Comment": "Updates on an old Motor policy of 235k total"
+    },
+    {
+      "LOB": "DCLIA",
+      "UWY": 2018,
+      "Comment": ""
+    },
+    {
+      "LOB": "DCMAR",
+      "UWY": 2017,
+      "Comment": ""
+    },
+    {
+      "LOB": "DCMAR",
+      "UWY": 2018,
+      "Comment": "Waiting for the court of Genova to deliberate; from Dec 31st possible release of 2.5m of IBNR for Olicar Gestione"
+    },
+    {
+      "LOB": "DCMAR",
+      "UWY": 2019,
+      "Comment": ""
+    },
+    {
+      "LOB": "DCMAR",
+      "UWY": 2020,
+      "Comment": ""
+    },
+    {
+      "LOB": "DCMAR",
+      "UWY": 2021,
+      "Comment": ""
+    },
+    {
+      "LOB": "DCMAR",
+      "UWY": 2022,
+      "Comment": ""
+    },
+    {
+      "LOB": "DCMAR",
+      "UWY": 2023,
+      "Comment": ""
+    },
+    {
+      "LOB": "DCMAR",
+      "UWY": 2024,
+      "Comment": ""
+    },
+    {
+      "LOB": "DCPRO",
+      "UWY": 2017,
+      "Comment": ""
+    },
+    {
+      "LOB": "DCPRO",
+      "UWY": 2018,
+      "Comment": ""
+    },
+    {
+      "LOB": "DCPRO",
+      "UWY": 2019,
+      "Comment": ""
+    },
+    {
+      "LOB": "DCSPE",
+      "UWY": 2017,
+      "Comment": ""
+    },
+    {
+      "LOB": "ENCON",
+      "UWY": 2017,
+      "Comment": ""
+    },
+    {
+      "LOB": "ENCON",
+      "UWY": 2018,
+      "Comment": ""
+    },
+    {
+      "LOB": "ENCON",
+      "UWY": 2019,
+      "Comment": ""
+    },
+    {
+      "LOB": "ENCON",
+      "UWY": 2020,
+      "Comment": ""
+    },
+    {
+      "LOB": "ENCON",
+      "UWY": 2021,
+      "Comment": ""
+    },
+    {
+      "LOB": "ENCON",
+      "UWY": 2022,
+      "Comment": "Payment of 200k and corresponding release in case reserve"
+    },
+    {
+      "LOB": "ENCON",
+      "UWY": 2023,
+      "Comment": ""
+    },
+    {
+      "LOB": "ENCON",
+      "UWY": 2024,
+      "Comment": ""
+    },
+    {
+      "LOB": "ENOFF",
+      "UWY": 2016,
+      "Comment": ""
+    },
+    {
+      "LOB": "ENOFF",
+      "UWY": 2017,
+      "Comment": ""
+    },
+    {
+      "LOB": "ENOFF",
+      "UWY": 2018,
+      "Comment": ""
+    },
+    {
+      "LOB": "ENOFF",
+      "UWY": 2019,
+      "Comment": ""
+    },
+    {
+      "LOB": "ENOFF",
+      "UWY": 2020,
+      "Comment": ""
+    },
+    {
+      "LOB": "ENOFF",
+      "UWY": 2021,
+      "Comment": "- `CENR21XAO0131`: Total E&P Angola deterioration outstanding of 220k+\n- `CENR22XID0120`: Payment and reduction outstanding of 123k"
+    },
+    {
+      "LOB": "ENOFF",
+      "UWY": 2022,
+      "Comment": ""
+    },
+    {
+      "LOB": "ENOFF",
+      "UWY": 2023,
+      "Comment": ""
+    },
+    {
+      "LOB": "ENOFF",
+      "UWY": 2024,
+      "Comment": ""
+    },
+    {
+      "LOB": "ENOFF",
+      "UWY": 2025,
+      "Comment": "- Booked 6m for `ENR25012158B`;"
+    },
+    {
+      "LOB": "ENONS",
+      "UWY": 2017,
+      "Comment": ""
+    },
+    {
+      "LOB": "ENONS",
+      "UWY": 2018,
+      "Comment": ""
+    },
+    {
+      "LOB": "ENONS",
+      "UWY": 2019,
+      "Comment": "- `ENR19010004A`(CENR19XQA0157) QATAR PETROLEUM FIRE AT RL PORT SHIPYARD Third and final adjustment and payment of 1.3m (for 3.7m total)"
+    },
+    {
+      "LOB": "ENONS",
+      "UWY": 2020,
+      "Comment": ""
+    },
+    {
+      "LOB": "ENONS",
+      "UWY": 2021,
+      "Comment": ""
+    },
+    {
+      "LOB": "ENONS",
+      "UWY": 2022,
+      "Comment": ""
+    },
+    {
+      "LOB": "ENONS",
+      "UWY": 2023,
+      "Comment": "- `CENR23XKZ0029`: Natsionalnaya Kompaniya Kazmunaigaz possible improvement of 800k"
+    },
+    {
+      "LOB": "ENONS",
+      "UWY": 2024,
+      "Comment": "- Payment of 7.9m for MOH"
+    },
+    {
+      "LOB": "ENONS",
+      "UWY": 2025,
+      "Comment": "- MOL CENR25XHU0064 45m SIBNR\n- GGWP reduction of 680k but 3.1m booked for `ENR25012158B` (and 6m for the ENOFF A part of the slip)\n- CENR25XAU0040 outstanding of 560k for ENR25021281A\n"
+    },
+    {
+      "LOB": "ENOTH",
+      "UWY": 2020,
+      "Comment": ""
+    },
+    {
+      "LOB": "ENOTH",
+      "UWY": 2021,
+      "Comment": ""
+    },
+    {
+      "LOB": "ENOTH",
+      "UWY": 2022,
+      "Comment": ""
+    },
+    {
+      "LOB": "ENOTH",
+      "UWY": 2023,
+      "Comment": ""
+    },
+    {
+      "LOB": "ENOTH",
+      "UWY": 2024,
+      "Comment": ""
+    },
+    {
+      "LOB": "ENOTH",
+      "UWY": 2025,
+      "Comment": ""
+    },
+    {
+      "LOB": "LIIND",
+      "UWY": 2022,
+      "Comment": ""
+    },
+    {
+      "LOB": "LIIND",
+      "UWY": 2023,
+      "Comment": ""
+    },
+    {
+      "LOB": "LIIND",
+      "UWY": 2024,
+      "Comment": ""
+    },
+    {
+      "LOB": "LIIND",
+      "UWY": 2025,
+      "Comment": ""
+    },
+    {
+      "LOB": "LIMED",
+      "UWY": 2025,
+      "Comment": ""
+    },
+    {
+      "LOB": "LIMLT",
+      "UWY": 2018,
+      "Comment": ""
+    },
+    {
+      "LOB": "LISHT",
+      "UWY": 2017,
+      "Comment": ""
+    },
+    {
+      "LOB": "LISHT",
+      "UWY": 2018,
+      "Comment": ""
+    },
+    {
+      "LOB": "LISHT",
+      "UWY": 2019,
+      "Comment": ""
+    },
+    {
+      "LOB": "LISHT",
+      "UWY": 2020,
+      "Comment": ""
+    },
+    {
+      "LOB": "LISHT",
+      "UWY": 2021,
+      "Comment": ""
+    },
+    {
+      "LOB": "LISHT",
+      "UWY": 2022,
+      "Comment": "- Caravela account 222k case reserves and 100k paids"
+    },
+    {
+      "LOB": "LISHT",
+      "UWY": 2023,
+      "Comment": ""
+    },
+    {
+      "LOB": "LISHT",
+      "UWY": 2024,
+      "Comment": ""
+    },
+    {
+      "LOB": "LISHT",
+      "UWY": 2025,
+      "Comment": ""
+    },
+    {
+      "LOB": "PRTOT",
+      "UWY": 2017,
+      "Comment": ""
+    },
+    {
+      "LOB": "PRTOT",
+      "UWY": 2018,
+      "Comment": ""
+    },
+    {
+      "LOB": "PRTOT",
+      "UWY": 2019,
+      "Comment": "- `CPRO20XKR1803` DP WORLD (Korea): recovery of 841k + release of 150k outstanding "
+    },
+    {
+      "LOB": "PRTOT",
+      "UWY": 2020,
+      "Comment": ""
+    },
+    {
+      "LOB": "PRTOT",
+      "UWY": 2021,
+      "Comment": ""
+    },
+    {
+      "LOB": "PRTOT",
+      "UWY": 2022,
+      "Comment": ""
+    },
+    {
+      "LOB": "PRTOT",
+      "UWY": 2023,
+      "Comment": "- Reduction in 840k for DCC limited (see Claims LL Report)"
+    },
+    {
+      "LOB": "PRTOT",
+      "UWY": 2024,
+      "Comment": ""
+    }
   ]
 }
