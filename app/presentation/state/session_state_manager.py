@@ -25,6 +25,8 @@ def initialize_session_state(debug: bool = False):
 
     st.session_state.setdefault("transactions_file", None)
     st.session_state.setdefault("transactions_data", None)
+    
+    st.session_state.setdefault("ri_outward", None)
 
     # import data if not already in session state and cache them in session state
     if st.session_state.transactions_data is None:
@@ -41,3 +43,15 @@ def initialize_session_state(debug: bool = False):
         )
 
         info("Transactions data loaded into session state.")
+
+        # st.session_state.ri_outward = (
+        #     pd.read_excel(
+        #         st.session_state.transactions_file,
+        #         sheet_name="RI Outward",
+        #         engine="openpyxl",
+        #     )
+        #     if st.session_state.transactions_file
+        #     else None
+        # )
+
+        # info("RI Outward data loaded into session state.")
