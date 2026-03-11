@@ -5,6 +5,21 @@ LOB = [
     {"DCTOT": "Discontinued"},
 ]
 
+LOB_MAPPING = {
+    "Energy": ["ENOFF", "ENONS", "ENCON", "ENOTH"],
+    "Life": ["LIIND", "LIMLT", "LISHT", "LIMED"],
+    "Property": ["PRTOT"],
+    "Discontinued": [
+        "DCMAR",
+        "DCENR",
+        "DCPRO",
+        "DCBON",
+        "DCFIL",
+        "DCSPE",
+        "DCLIA",
+        "DCFRO",
+    ],
+}
 SUBLOBS = [
     "ENOFF",
     "ENONS",
