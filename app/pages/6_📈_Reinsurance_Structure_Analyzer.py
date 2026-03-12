@@ -27,7 +27,10 @@ st.title("Reinsurance Structure Analyzer")
 get_sidebar()
 
 st.write(
-    "This page provides a minimalistic view on the reinsurance structure under consideration, allowing to analyze the impact of different claim sizes on the recovery and reinstatement premiums across the layers of the structure. The structure is currently hardcoded to be the Energy sheet of the outward RI excel file, but can be easily extended to other sheets or even other data sources by implementing new parsing strategies (see code below)."
+    """This page provides a minimalistic view on the reinsurance structure under consideration, 
+    allowing to analyze the impact of different claim sizes on the recovery and reinstatement premiums across the layers of the structure. 
+    The structure is currently hardcoded to be the Energy sheet of the outward RI excel file, 
+    but can be easily extended to other sheets or even other data sources by implementing new parsing strategies (see code below)."""
 )
 
 reinsurance_structure = pd.read_excel(
@@ -35,6 +38,27 @@ reinsurance_structure = pd.read_excel(
 )
 
 st.dataframe(reinsurance_structure)
+
+st.write("### Reinsurance Basis Logic")
+st.write("""It is critical to distinguish between the Risk Attaching (RAD) and Loss Occurring (LOD) bases within this structure. Our Quota Share (QS) layers, 
+         both internal and external, operate on a Risk Attaching basis, 
+         meaning the treaty covers all claims arising from policies that began during the treaty period, 
+         regardless of when the loss actually happens. Conversely, the Excess of Loss (XoL) layers function on a Loss Occurring basis; 
+         these treaties cover all claims that take place within the calendar year, 
+         regardless of when the underlying policy was originally issued.""")
+
+
+# st.write("The Concepts Explained")
+s = """Risk Attaching (Proportional/QS): 
+        Think of this as _following the policy_. 
+        If you write a 12-month policy on December 31st, 2025, a Risk Attaching treaty for the 2025 
+        year will cover that policy until it expires in late 2026. 
+        It provides a clean match between premium income and the specific risks written during that window.
+
+    Loss Occurring (Non-Proportional/XoL): Think of this as "following the clock." 
+        This basis acts like a safety net for a specific period of time. If a fire happens on July 4th, 2026, 
+        it is covered by the 2026 XoL treaty, even if the insurance policy was sold back in 2025. 
+        It is designed to protect the balance sheet against spikes in volatility within a specific fiscal year."""
 
 
 class ReinsuranceStructureAnalyzer:
