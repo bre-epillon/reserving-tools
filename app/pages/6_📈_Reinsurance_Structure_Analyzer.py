@@ -94,7 +94,7 @@ st.markdown(
     "Below is an analysis of the recovery and reinstatement premiums across the layers for different claim sizes."
 )
 
-st.checkbox("With AAD", key="include_aad", value=True)
+st.toggle("With AAD", key="include_aad", value=True)
 
 claims_list = np.linspace(1000000, 90000000, 100).tolist()
 
