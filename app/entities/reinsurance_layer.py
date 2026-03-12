@@ -15,6 +15,8 @@ class Layer:
         aad=0,
         n_reinstatements=0,
         cost_reinstatements=0,
+        is_internal_qs=False,
+        layer_type="XoL",
         **kwargs,
     ):
         self.layer_name = layer_name
@@ -25,6 +27,8 @@ class Layer:
         self.aad = 0 if pd.isna(aad) else aad
         self.n_reinstatements = n_reinstatements
         self.cost_reinstatements = cost_reinstatements
+        self.layer_type = layer_type
+        self.is_internal_qs = is_internal_qs
         self.validate_layer()
 
     def validate_layer(self):
@@ -57,16 +61,20 @@ class Layer:
             )
             return 0, 0
 
+        if self.layer_type == "Proportional":
+            # Quota Share: Recovery is a straight % of the remaining claim
+            recovery = gross_claim * self.order
+            return recovery, 0  # No reinstatement on QS
+
+        # XoL logic with AAD consideration
         if not include_aad and self.aad > 0:
             info(
                 f"AAD of {self.aad} is being ignored for layer {self.layer_name} as per user selection."
             )
-            effective_aad = 0
-        else:
-            effective_aad = self.aad
+            self.aad = 0
 
         # Effective attachment point shifts if AAD is active
-        effective_attachment = self.excess + effective_aad
+        effective_attachment = self.excess + self.aad
 
         # debug(
         #     f"Effective attachment: {effective_attachment} with excess: {self.excess} and AAD: {self.aad}"
@@ -84,3 +92,19 @@ class Layer:
         reinstatement_premium = recovery * self.rol
 
         return recovery, reinstatement_premium
+
+
+class EmptyLayer(Layer):
+    def __init__(self):
+        super().__init__(
+            layer_name="Empty Layer",
+            limit=0,
+            excess=0,
+            rol=0,
+            order=0,
+            aad=0,
+            n_reinstatements=0,
+            cost_reinstatements=0,
+            is_internal_qs=False,
+            layer_type="Empty",
+        )

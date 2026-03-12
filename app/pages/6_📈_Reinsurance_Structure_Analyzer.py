@@ -4,6 +4,7 @@ from shared.colored_logging import info, warning, error, debug, success
 from shared.utils import create_pivot_table, get_quarter, get_sidebar, get_year
 from abc import ABC, abstractmethod
 from entities.reinsurance_layer import Layer
+import plotly.express as px
 from services.claims_analyzer_engine import ClaimsAnalyzerEngine as ClaimsAnalyzer
 from services.layer_parsing_strategy import (
     LayerParsingStrategy,
@@ -76,30 +77,36 @@ claims_list = np.linspace(1000000, 90000000, 100).tolist()
 data = []
 for claim in claims_list:
     claims_analyzer = ClaimsAnalyzer(layers=layers)
-    recovery, reinstatement_premium, _ = (
-        claims_analyzer.calculate_single_claim_recovery(
-            claim_size=claim,
-            include_aad=st.session_state.get("include_aad", True),
-        )
+    (
+        total_recovery,
+        total_reinstatement_premium,
+        ri_structure_application_summary,
+        final_net_claim,
+    ) = claims_analyzer.calculate_single_claim_recovery(
+        claim_size=claim,
+        include_aad=st.session_state.get("include_aad", True),
     )
+
+    net_before_int_qs = final_net_claim + ri_structure_application_summary.get(
+        "internal_qs", {}
+    ).get("Recovery", 0)
     # st.write(f"Claim: {claim}, Recovery: {recovery}, Reinstatement Premium: {reinstatement_premium}")
     data.append(
         {
             "claim_amount": claim,
-            "recovery": recovery,
-            "reinstatement_premium": reinstatement_premium,
-            "net": claim - recovery + reinstatement_premium,
+            "recovery": total_recovery,
+            "reinstatement_premium": total_reinstatement_premium,
+            "net_before_int_qs": net_before_int_qs,
+            "net": final_net_claim,
         }
     )
-
-import plotly.express as px
 
 df = pd.DataFrame(data)
 
 fig = px.line(
     df,
     x="claim_amount",
-    y=["recovery", "reinstatement_premium", "net"],
+    y=["recovery", "reinstatement_premium", "net_before_int_qs", "net"],
     title="Recovery vs. Reinstatement Premium",
 )
 
@@ -110,26 +117,32 @@ st.plotly_chart(fig)
 st.slider(
     "Claim",
     key="selected_claim_size",
-    min_value=1000000,
-    max_value=90000000,
-    value=54000000,
-    step=10000,
+    min_value=1000000.0,
+    max_value=90000000.0,
+    value=54000000.0,
+    step=10000.0,
     format="%f",
 )
 
 # st.write(f"Selected claim size: {st.session_state.get('selected_claim_size', 0).format('%.2f')}")
 
 
-claim_analyzer = ClaimsAnalyzer(
-    claim=st.session_state.get("selected_claim_size", 0), layers=layers
-)
-total_recovery, total_reinstatement_premium, ri_structure_application_summary = (
-    claim_analyzer.calculate_recovery(
-        layers=layers, claim_size=st.session_state.get("selected_claim_size", 0)
-    )
+claim_analyzer = ClaimsAnalyzer(layers=layers)
+(
+    total_recovery,
+    total_reinstatement_premium,
+    ri_structure_application_summary,
+    final_net_claim,
+) = claim_analyzer.calculate_single_claim_recovery(
+    claim_size=st.session_state.get("selected_claim_size", 0),
+    include_aad=st.session_state.get("include_aad", True),
 )
 
-st.write(f"Total Recovery: {total_recovery}")
-st.write(f"Total Reinstatement Premium: {total_reinstatement_premium}")
+
+st.write(
+    f"Selected Claim Size: {st.session_state.get('selected_claim_size', 0) / 1000000:.1f}m"
+)
+st.write(f"Total Recovery: {total_recovery / 1000000:.1f}m")
+st.write(f"Total Reinstatement Premium: {total_reinstatement_premium / 1000000:.1f}m")
 
 pd.DataFrame(ri_structure_application_summary).T
