@@ -3,6 +3,7 @@ from datetime import datetime
 import pandas as pd
 import os
 from shared.colored_logging import info, warning, error, debug, success
+from services.reinsurance_api import ReinsuranceDataAPI
 
 files = {}
 
@@ -63,6 +64,13 @@ def initialize_session_state(debug: bool = False):
         )
 
         info("Historical premiums data loaded into session state.")
+
+        st.session_state.db_api = ReinsuranceDataAPI(
+            "inputs/ProductionReport_2025Q4.xlsx"
+        )
+
+        info("Database API loaded into session state.")
+
         # st.session_state.ri_outward = (
         #     pd.read_excel(
         #         st.session_state.transactions_file,
