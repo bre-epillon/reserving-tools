@@ -97,6 +97,7 @@ st.markdown(
 st.toggle("With AAD", key="include_aad", value=True)
 
 claims_list = np.linspace(1000000, 90000000, 100).tolist()
+claims_list = []
 
 data = []
 for claim in claims_list:
@@ -127,16 +128,14 @@ for claim in claims_list:
 
 df = pd.DataFrame(data)
 
-fig = px.line(
-    df,
-    x="claim_amount",
-    y=["recovery", "reinstatement_premium", "net_before_int_qs", "net"],
-    title="Recovery vs. Reinstatement Premium",
-)
+# fig = px.line(
+#     df,
+#     x="claim_amount",
+#     y=["recovery", "reinstatement_premium", "net_before_int_qs", "net"],
+#     title="Recovery vs. Reinstatement Premium",
+# )
 
-st.plotly_chart(fig)
-
-# st.write([layer.__dict__ for layer in layers])
+# st.plotly_chart(fig)
 
 st.slider(
     "Claim",
@@ -168,5 +167,6 @@ st.write(
 )
 st.write(f"Total Recovery: {total_recovery / 1000000:.1f}m")
 st.write(f"Total Reinstatement Premium: {total_reinstatement_premium / 1000000:.1f}m")
+st.write(f"AAD Included: {st.session_state.get('include_aad', True)}")
 
 pd.DataFrame(ri_structure_application_summary).T
