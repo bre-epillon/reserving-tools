@@ -66,26 +66,28 @@ class Layer:
             recovery = gross_claim * self.order
             return recovery, 0  # No reinstatement on QS
 
+        effective_aad = self.aad if include_aad else 0
         # XoL logic with AAD consideration
-        if not include_aad and self.aad > 0:
-            info(
-                f"AAD of {self.aad} is being ignored for layer {self.layer_name} as per user selection."
-            )
-            self.aad = 0
 
-        # Effective attachment point shifts if AAD is active
-        effective_attachment = self.excess + self.aad
-
+        if effective_aad > 0:
+            info(f"AAD of {effective_aad} is being applied to layer {self.layer_name}.")
+        else:
+            info(f"No AAD is being applied to layer {self.layer_name}.")
+        info(
+            f"Calculating recovery for layer {self.layer_name} with gross claim {gross_claim}, excess {self.excess}, limit {self.limit}, and order {self.order}."
+        )
         # debug(
         #     f"Effective attachment: {effective_attachment} with excess: {self.excess} and AAD: {self.aad}"
         # )
-        self.aad = max(0, self.aad - max(0, gross_claim - self.excess))
+        if include_aad:
+            self.aad = max(0, self.aad - max(0, gross_claim - self.excess))
 
-        # Standard Excess of Loss logic: Min(limit, Max(0, Claim - Attachment))
-        impacted_amount = max(0, min(self.limit, gross_claim - effective_attachment))
-        # debug(
-        #     f"Impacted amount: {impacted_amount}, given that limit: {self.limit}, gross claim: {gross_claim}, and effective attachment: {effective_attachment}"
-        # )
+        impacted_amount = min(
+            self.limit - effective_aad, max(0, gross_claim - self.excess)
+        )
+        debug(
+            f"Impacted amount: {impacted_amount}, given that claim: {gross_claim}, limit: {self.limit}, and excess: {self.excess} with AAD: {effective_aad}"
+        )
         recovery = impacted_amount * self.order
 
         # Reinstatement Premium = Recovery * RoE
