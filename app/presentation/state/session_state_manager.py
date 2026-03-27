@@ -47,7 +47,7 @@ def initialize_session_state(debug: bool = False):
         st.session_state.transactions_data = (
             pd.read_excel(
                 st.session_state.transactions_file,
-                sheet_name="Final",
+                sheet_name="Final Adj",
                 engine="openpyxl",
             )
             if st.session_state.transactions_file
