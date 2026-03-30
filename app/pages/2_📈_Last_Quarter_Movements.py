@@ -170,6 +170,10 @@ merged_result = pd.merge(
     how="left",
 )
 
+merged_result[["GClmO", "GClmP", "GGWP"]] = merged_result[
+    ["GClmO", "GClmP", "GGWP"]
+].applymap(lambda x: int(x) if isinstance(x, (int, float)) else x)
+
 merged_result_2 = pd.merge(
     result,
     df_comments,
@@ -178,12 +182,12 @@ merged_result_2 = pd.merge(
     how="left",
 )
 
+st.dataframe(
+    merged_result[["LOB", "UWY", "GClmO", "GClmP", "GGWP", "Comment"]],
+    use_container_width=True,
+)
 
-AgGrid(merged_result)
-
-st.dataframe(merged_result)
-
-st.write(merged_result.to_html(escape=False, index=False), unsafe_allow_html=True)
+# st.write(merged_result.to_html(escape=False, index=False), unsafe_allow_html=True)
 
 # Section for adding/editing comments per LOB and UWY
 st.write("### Add or Edit Comments")
@@ -292,6 +296,36 @@ gridOptions = gb.build()
 # 4. Render the grid
 AgGrid(
     result,
+    gridOptions=gridOptions,
+    allow_unsafe_jscode=True,
+    height=600,
+)
+
+
+st.write("### Imported Data Summary")
+
+df = transactions_importer.data[
+    transactions_importer.data["Measure"].isin(["GClmO", "GClmP", "GGWP", "GPrmB"])
+]
+
+total_data = df.pivot_table(
+    index=["PolicyReference", "LOB", "UWY"],
+    columns="Measure",
+    values="value",
+    aggfunc="sum",
+    fill_value=0,
+).reset_index()
+
+gb = GridOptionsBuilder.from_dataframe(total_data)
+
+for col in ["GClmO", "GClmP", "GGWP", "GPrmB"]:
+    gb.configure_column(col, valueFormatter=number_formatter, cellStyle=color_style)
+
+gridOptions = gb.build()
+
+# 4. Render the grid
+AgGrid(
+    total_data,
     gridOptions=gridOptions,
     allow_unsafe_jscode=True,
     height=600,
