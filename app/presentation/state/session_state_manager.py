@@ -41,19 +41,20 @@ def initialize_session_state(debug: bool = False):
 
     # import data if not already in session state and cache them in session state
     if st.session_state.transactions_data is None:
-        st.session_state.transactions_file = files.get("data_202512_v5.xlsx", None)
+        data_file_name = "data_202603.xlsx"
+        st.session_state.transactions_file = files.get(data_file_name, None)
 
         st.session_state.transactions_data = (
             pd.read_excel(
                 st.session_state.transactions_file,
-                sheet_name="Final",
+                sheet_name="Final Adj",
                 engine="openpyxl",
             )
             if st.session_state.transactions_file
             else None
         )
 
-        info("Transactions data loaded into session state.")
+        info(f"Transactions data {data_file_name=} loaded into session state.")
 
         st.session_state.historical_premiums = (
             pd.read_csv(
