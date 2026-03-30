@@ -172,7 +172,7 @@ merged_result = pd.merge(
 
 merged_result[["GClmO", "GClmP", "GGWP"]] = merged_result[
     ["GClmO", "GClmP", "GGWP"]
-].applymap(lambda x: int(x) if isinstance(x, (int, float)) else x)
+].map(lambda x: int(x) if isinstance(x, (int, float)) else x)
 
 merged_result_2 = pd.merge(
     result,
@@ -184,7 +184,7 @@ merged_result_2 = pd.merge(
 
 st.dataframe(
     merged_result[["LOB", "UWY", "GClmO", "GClmP", "GGWP", "Comment"]],
-    use_container_width=True,
+    width="stretch",
 )
 
 # st.write(merged_result.to_html(escape=False, index=False), unsafe_allow_html=True)
@@ -303,12 +303,26 @@ AgGrid(
 
 
 st.write("### Imported Data Summary")
+toggle_button = st.checkbox(
+    "Toggle data selection for last quarter", value=False, key="toggle_last_quarter"
+)
 
-df = transactions_importer.data[
-    transactions_importer.data["Measure"].isin(["GClmO", "GClmP", "GGWP", "GPrmB"])
-]
+if toggle_button:
+    df = transactions_importer.data[
+        (
+            transactions_importer.data["Measure"].isin(
+                ["GClmO", "GClmP", "GGWP", "GPrmB"]
+            )
+        )
+        & (transactions_importer.data["date"] > LAST_QUARTER_STR)
+    ]
+else:
+    df = transactions_importer.data[
+        transactions_importer.data["Measure"].isin(["GClmO", "GClmP", "GGWP", "GPrmB"])
+    ]
 
-total_data = df.pivot_table(
+st.write("## Policy Level Summary")
+policy_pivotdata = df.pivot_table(
     index=["PolicyReference", "LOB", "UWY"],
     columns="Measure",
     values="value",
@@ -316,7 +330,8 @@ total_data = df.pivot_table(
     fill_value=0,
 ).reset_index()
 
-gb = GridOptionsBuilder.from_dataframe(total_data)
+gb = GridOptionsBuilder.from_dataframe(policy_pivotdata)
+gb.configure_default_column(filter=True)
 
 for col in ["GClmO", "GClmP", "GGWP", "GPrmB"]:
     gb.configure_column(col, valueFormatter=number_formatter, cellStyle=color_style)
@@ -325,7 +340,32 @@ gridOptions = gb.build()
 
 # 4. Render the grid
 AgGrid(
-    total_data,
+    policy_pivotdata,
+    gridOptions=gridOptions,
+    allow_unsafe_jscode=True,
+    height=600,
+)
+
+st.write("## Claim Level Summary")
+claim_pivotdata = df.pivot_table(
+    index=["ClaimReference", "LOB", "UWY"],
+    columns="Measure",
+    values="value",
+    aggfunc="sum",
+    fill_value=0,
+).reset_index()
+
+gb = GridOptionsBuilder.from_dataframe(claim_pivotdata)
+gb.configure_default_column(filter=True)
+
+for col in ["GClmO", "GClmP", "GGWP", "GPrmB"]:
+    gb.configure_column(col, valueFormatter=number_formatter, cellStyle=color_style)
+
+gridOptions = gb.build()
+
+# 4. Render the grid
+AgGrid(
+    claim_pivotdata,
     gridOptions=gridOptions,
     allow_unsafe_jscode=True,
     height=600,
