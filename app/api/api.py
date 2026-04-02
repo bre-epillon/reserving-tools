@@ -10,7 +10,7 @@ data_cache = {}
 async def lifespan(app: FastAPI):
     # This code runs ONCE when the server starts
     print("Loading CSV into cache...")
-    df = pd.read_csv("your_data.csv")
+    df = pd.read_csv("inputs/premiums_2026-02-27.csv")
     data_cache["df"] = df
     yield
     # This code runs when the server shuts down
