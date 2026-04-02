@@ -67,10 +67,10 @@ with col1:
             label="Aggregated Line of Business (LoB) to Analyze",
         )
 
-    if aggregated_lob != "None":
-        selected_lob = st.session_state.selected_lob
-        if selected_lob not in LOB_MAPPING[aggregated_lob]:
-            st.session_state.selected_lob = LOB_MAPPING[aggregated_lob][0]
+    # if aggregated_lob != "None":
+    #     # selected_lob = st.session_state.selected_lob
+    #     if selected_lob not in LOB_MAPPING[aggregated_lob]:
+    #         st.session_state.selected_lob = LOB_MAPPING[aggregated_lob][0]
 
 
 with col2:
