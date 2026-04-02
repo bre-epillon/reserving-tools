@@ -1,91 +1,92 @@
 import streamlit as st
+from services.transactions_importer import TransactionsImporter
 from presentation.state.session_state_manager import initialize_session_state
-from shared.narratives import USAGE, DETAILS, NAVIGATION, DISCLAIMER
 from shared.colored_logging import info, warning, error, debug, success
+from shared.utils import get_sidebar
 import pandas as pd
 import numpy as np
 import json
+from st_aggrid import AgGrid, GridOptionsBuilder, JsCode
+
 
 st.set_page_config(page_title="Last Quarter Movements", page_icon="📈", layout="wide")
 
 initialize_session_state()
 
 st.title("Last Quarter Movements")
-st.sidebar.title("Navigation")
-st.sidebar.markdown(NAVIGATION)
 
-st.sidebar.title("Usage Instructions")
-st.sidebar.markdown(USAGE)
-
-st.sidebar.title("Details")
-st.sidebar.markdown(DETAILS)
-
-st.sidebar.title("Disclaimer")
-st.sidebar.markdown(DISCLAIMER)
+get_sidebar()
 
 
 st.write(
     "This page provides an overview of the quarterly movements for each line of business (LoB), both at the claim level and policy level."
 )
 
+transactions_importer = TransactionsImporter(st.session_state.transactions_data)
+transactions_data = transactions_importer.get_transactions()
+
+# with st.expander("Data Selection Override"):
+#     col1, col2 = st.columns(2)
+#     with col1:
+#         st.selectbox(
+#             "Select cutoff date",
+#             options=[i for i in range(1, 5)],
+#             key="selected_quarter",
+#             index=int(st.session_state.get("selected_quarter", 1)) - 1,
+#         )
+#     with col2:
+#         st.selectbox(
+#             "Select comparison date",
+#             options=[i for i in range(2017, 2027)],
+#             key="selected_year",
+#             index=int(st.session_state.get("selected_year", 2026)) - 2017,
+#         )
+
+
 # SELECTED_QUARTER = st.session_state.get("selected_quarter", None)
+LAST_QUARTER_STR = transactions_importer.get_last_quarter()
 
-df = st.session_state.transactions_data.copy()
+last_quarter_data = transactions_importer.get_last_quarter_data()
 
-debug(f"Transactions data shape: {st.session_state.transactions_data.shape}")
-
-df.drop(columns=["LOB"], inplace=True)
-df.rename(columns={"Final LOB": "LOB"}, inplace=True)
-
-df["date"] = pd.to_datetime(df["CutOffDate"])
-debug(f"Latest entry found in the data: {df['date'].max()}")
-
-last_quarter = df["date"].max().to_period("Q")
-mask_last_quarter = df["date"].dt.to_period("Q") == last_quarter
-
-st.write(f"Data is available up to: **{last_quarter}**")
-
-SELECTED_QUARTER = last_quarter
-
-LAST_QUARTER_STR = f"{last_quarter.year}Q{last_quarter.quarter}"
-debug(f"Last quarter identified as: {LAST_QUARTER_STR}")
+st.write(f"Data is available up to: **{LAST_QUARTER_STR}**")
 
 COMMENTS_FILE = f"comments_{LAST_QUARTER_STR}.json"
 debug(f"Comments file set to: {COMMENTS_FILE}")
 
 
-df = df[df["Measure"].isin(["GClmO", "GClmP"])]
+# df = df[df["Measure"].isin(["GClmO", "GClmP"])]
 with st.expander("Supporting Selection Filters"):
     col1, col2 = st.columns(2)
     with col1:
         lob_selector = st.multiselect(
             "Select LOB (if not selected, all will be selected)",
-            options=df["LOB"].unique(),
+            options=last_quarter_data["LOB"].unique(),
             key="selected_lob",
-            default=df["LOB"].unique(),
+            default=last_quarter_data["LOB"].unique(),
         )
 
     with col2:
         uwy_selector = st.multiselect(
             "Select UWY (if not selected, all will be selected)",
-            options=df["UWY"].unique(),
+            options=last_quarter_data["UWY"].unique(),
             key="selected_uwy",
-            default=df["UWY"].unique(),
+            default=last_quarter_data["UWY"].unique(),
         )
 
+# df = df[df["LOB"].isin(lob_selector) & df["UWY"].isin(uwy_selector)]
+# # Split data
+# df_total = df.copy()
 
-df = df[df["LOB"].isin(lob_selector) & df["UWY"].isin(uwy_selector)]
-# Split data
-df_total = df.copy()
-
-df_last_quarter = df.loc[mask_last_quarter].copy()
 info(
-    f"Data filtered for last quarter ({LAST_QUARTER_STR}) has shape: {df_last_quarter.shape}"
+    f"Data filtered for last quarter ({LAST_QUARTER_STR}) has shape: {last_quarter_data.shape}"
 )
 
+st.info(
+    f"{last_quarter_data.shape[0]} entries have been found in the last quarter movements"
+)
 
-# Pivot table for totals
-pivot_total = df_total.pivot_table(
+# Pivot table for last quarter
+result = last_quarter_data.pivot_table(
     index=["LOB", "UWY"],
     columns="Measure",
     values="value",
@@ -93,31 +94,25 @@ pivot_total = df_total.pivot_table(
     fill_value=0,
 ).reset_index()
 
-# Pivot table for last month
-pivot_last = df_last_quarter.pivot_table(
-    index=["LOB", "UWY"],
-    columns="Measure",
-    values="value",
-    aggfunc="sum",
-    fill_value=0,
-).reset_index()
+# # Merge them
+# result = pivot_total.merge(
+#     pivot_last, on=["LOB", "UWY"], suffixes=("_Total", "_LastMonth"), how="left"
+# ).fillna(0)
 
-# Merge them
-result = pivot_total.merge(
-    pivot_last, on=["LOB", "UWY"], suffixes=("_Total", "_LastMonth"), how="left"
-).fillna(0)
+# # Sum all columns ending with _Total and _LastMonth
+# total_cols = [col for col in result.columns if col.endswith("_Total")]
+# lastmonth_cols = [col for col in result.columns if col.endswith("_LastMonth")]
 
-# Sum all columns ending with _Total and _LastMonth
-total_cols = [col for col in result.columns if col.endswith("_Total")]
-lastmonth_cols = [col for col in result.columns if col.endswith("_LastMonth")]
-
-result["Incurred_Total"] = result[total_cols].sum(axis=1)
-result["Incurred_LastMonth"] = result[lastmonth_cols].sum(axis=1)
+# result["Incurred_Total"] = result[total_cols].sum(axis=1)
+# result["Incurred_LastMonth"] = result[lastmonth_cols].sum(axis=1)
 
 
 # Format number columns in thousands with 'k' suffix
 def format_thousands_colored(val):
+    return val
     if isinstance(val, (int, float, np.integer, np.floating)):
+        if val == 0:
+            return ""
         color = "green" if val >= 0 else "red"
         return f'<span style="color:{color}">{val / 1000:,.1f}k</span>'
     return val
@@ -132,21 +127,20 @@ def format_thousands(val):
 number_cols = result.select_dtypes(include=[np.number]).columns
 result_formatted = result.copy()
 for col in number_cols:
-    if col != "UWY":  # Avoid formatting UWY which is year
-        if col.endswith("_Total"):
-            result_formatted[col] = result_formatted[col].apply(format_thousands)
-        elif col.endswith("_LastMonth"):
-            result_formatted[col] = result_formatted[col].apply(
-                format_thousands_colored
-            )
+    if col != "UWY":  # Avoid formatting UWY
+        debug(f"Formatting column: {col}")
+        result_formatted[col] = result_formatted[col].apply(format_thousands_colored)
 
 
 # =============================================================
 # Loading comments and annotations
 def load_comments():
     try:
+        info(f"Loading comments from '{COMMENTS_FILE}'...")
         with open(COMMENTS_FILE, "r") as f:
+            success(f"Comments file '{COMMENTS_FILE}' loaded successfully.")
             return json.load(f)
+
     except FileNotFoundError:
         warning(f"Comments file '{COMMENTS_FILE}' not found. Returning empty comments.")
         return {}
@@ -165,6 +159,7 @@ df_comments = (
     if LAST_QUARTER_STR in comments_data
     else pd.DataFrame(columns=["LOB", "UWY", "Comment"])
 )
+
 # =============================================================
 # Merge comments with result_formatted using UWY and LOB
 merged_result = pd.merge(
@@ -175,8 +170,24 @@ merged_result = pd.merge(
     how="left",
 )
 
+merged_result[["GClmO", "GClmP", "GGWP"]] = merged_result[
+    ["GClmO", "GClmP", "GGWP"]
+].map(lambda x: int(x) if isinstance(x, (int, float)) else x)
 
-st.write(merged_result.to_html(escape=False, index=False), unsafe_allow_html=True)
+merged_result_2 = pd.merge(
+    result,
+    df_comments,
+    left_on=["LOB", "UWY"],
+    right_on=["LOB", "UWY"],
+    how="left",
+)
+
+st.dataframe(
+    merged_result[["LOB", "UWY", "GClmO", "GClmP", "GGWP", "Comment"]],
+    width="stretch",
+)
+
+# st.write(merged_result.to_html(escape=False, index=False), unsafe_allow_html=True)
 
 # Section for adding/editing comments per LOB and UWY
 st.write("### Add or Edit Comments")
@@ -184,9 +195,9 @@ st.write("### Add or Edit Comments")
 # Prepare a dict to collect new/edited comments
 updated_comments = comments_data.copy()
 quarter_key = (
-    last_quarter.strftime("%YQ%q")
-    if hasattr(last_quarter, "strftime")
-    else str(last_quarter)
+    LAST_QUARTER_STR.strftime("%YQ%q")
+    if hasattr(LAST_QUARTER_STR, "strftime")
+    else str(LAST_QUARTER_STR)
 )
 
 if quarter_key not in updated_comments:
@@ -234,3 +245,128 @@ if st.button("Save Comments"):
         success("Comments saved successfully.")
     except Exception as e:
         error(f"Failed to save comments: {e}")
+
+gb = GridOptionsBuilder.from_dataframe(result)
+
+# 3. Write your formatting logic in JavaScript (JsCode)
+# This perfectly mimics your format_thousands_colored Python function
+number_formatter = JsCode("""
+function(params) {
+    if (params.value === null || params.value === undefined || params.value === 0) {
+        return "";
+    }
+    return (params.value / 1000).toLocaleString('en-US', {
+        minimumFractionDigits: 1, 
+        maximumFractionDigits: 1
+    }) + "k";
+}
+""")
+
+# 2. Javascript for purely setting the CSS styling
+color_style = JsCode("""
+function(params) {
+    if (params.value === null || params.value === undefined || params.value === 0) {
+        return null; // Default style
+    }
+    if (params.value >= 0) {
+        return {'color': 'green'};
+    } else {
+        return {'color': 'red'};
+    }
+}
+""")
+
+columns_to_format = [
+    "GBrok",
+    "GClmO",
+    "GClmP",
+    "GDed",
+    "GGWP",
+    "GPrmB",
+    "GPrmR",
+    "Gbrok",
+]
+
+# 3. Apply BOTH the formatter and the style to your columns
+for col in columns_to_format:
+    gb.configure_column(col, valueFormatter=number_formatter, cellStyle=color_style)
+
+gridOptions = gb.build()
+
+# 4. Render the grid
+AgGrid(
+    result,
+    gridOptions=gridOptions,
+    allow_unsafe_jscode=True,
+    height=600,
+)
+
+
+st.write("### Imported Data Summary")
+toggle_button = st.checkbox(
+    "Toggle data selection for last quarter", value=False, key="toggle_last_quarter"
+)
+
+if toggle_button:
+    df = transactions_importer.data[
+        (
+            transactions_importer.data["Measure"].isin(
+                ["GClmO", "GClmP", "GGWP", "GPrmB"]
+            )
+        )
+        & (transactions_importer.data["date"] > LAST_QUARTER_STR)
+    ]
+else:
+    df = transactions_importer.data[
+        transactions_importer.data["Measure"].isin(["GClmO", "GClmP", "GGWP", "GPrmB"])
+    ]
+
+st.write("## Policy Level Summary")
+policy_pivotdata = df.pivot_table(
+    index=["PolicyReference", "LOB", "UWY"],
+    columns="Measure",
+    values="value",
+    aggfunc="sum",
+    fill_value=0,
+).reset_index()
+
+gb = GridOptionsBuilder.from_dataframe(policy_pivotdata)
+gb.configure_default_column(filter=True)
+
+for col in ["GClmO", "GClmP", "GGWP", "GPrmB"]:
+    gb.configure_column(col, valueFormatter=number_formatter, cellStyle=color_style)
+
+gridOptions = gb.build()
+
+# 4. Render the grid
+AgGrid(
+    policy_pivotdata,
+    gridOptions=gridOptions,
+    allow_unsafe_jscode=True,
+    height=600,
+)
+
+st.write("## Claim Level Summary")
+claim_pivotdata = df.pivot_table(
+    index=["ClaimReference", "LOB", "UWY"],
+    columns="Measure",
+    values="value",
+    aggfunc="sum",
+    fill_value=0,
+).reset_index()
+
+gb = GridOptionsBuilder.from_dataframe(claim_pivotdata)
+gb.configure_default_column(filter=True)
+
+for col in ["GClmO", "GClmP", "GGWP", "GPrmB"]:
+    gb.configure_column(col, valueFormatter=number_formatter, cellStyle=color_style)
+
+gridOptions = gb.build()
+
+# 4. Render the grid
+AgGrid(
+    claim_pivotdata,
+    gridOptions=gridOptions,
+    allow_unsafe_jscode=True,
+    height=600,
+)
